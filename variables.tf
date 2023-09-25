@@ -7,9 +7,9 @@ variable "launch_template_config" {
           set(
             object(
               {
-                device_name  = optional(string)
+                device_name = optional(string)
                 ebs = optional(
-                  object(  
+                  object(
                     {
                       delete_on_termination = optional(bool, true)
                       encrypted             = optional(bool, true)
@@ -20,8 +20,8 @@ variable "launch_template_config" {
                       volume_size           = optional(string, 20)
                       volume_type           = optional(string, "gp3")
                     }
-                  ), 
-                  { }
+                  ),
+                  {}
                 )
                 no_device    = optional(string)
                 virtual_name = optional(string)
@@ -33,7 +33,7 @@ variable "launch_template_config" {
           object(
             {
               capacity_reservation_preference = optional(string, "none")
-              capacity_reservation_target     = optional(
+              capacity_reservation_target = optional(
                 object(
                   {
                     capacity_reservation_id                 = optional(string)
@@ -42,10 +42,10 @@ variable "launch_template_config" {
                 )
               )
             }
-          ) , {}
-        ) 
+          ), {}
+        )
         cpu_options = optional(
-          object(  
+          object(
             {
               amd_sev_snp      = optional(string, "enabled")
               core_count       = optional(string, 4)
@@ -53,13 +53,13 @@ variable "launch_template_config" {
             }
           )
         )
-        credit_specification               = optional(
+        credit_specification = optional(
           object(
             {
               cpu_credits = optional(string, "unlimited")
             }
           ),
-          { }
+          {}
         )
         default_version                    = optional(string)
         description                        = optional(string)
@@ -68,7 +68,7 @@ variable "launch_template_config" {
         disable_api_termination_compatible = optional(bool, true)
         disable_api_termination            = optional(bool, true)
         ebs_optimized                      = optional(bool, true)
-        elastic_gpu_specifications         = optional(
+        elastic_gpu_specifications = optional(
           object(
             {
               type = optional(string, "eg1.medium")
@@ -94,7 +94,7 @@ variable "launch_template_config" {
             {
               configured = optional(bool, false)
             }
-          ) , {}
+          ), {}
         )
         iam_instance_profile = optional(
           object(
@@ -128,10 +128,10 @@ variable "launch_template_config" {
         )
         instance_initiated_shutdown_behavior_compatible = optional(bool, true)
         instance_initiated_shutdown_behavior            = optional(string, "stop")
-        instance_market_options                         = optional(
+        instance_market_options = optional(
           object(
             {
-              market_type  = optional(string)
+              market_type = optional(string)
               spot_options = optional(
                 object(
                   {
@@ -184,7 +184,7 @@ variable "launch_template_config" {
               instance_generations    = optional(set(string))
               local_storage           = optional(string, "included")
               local_storage_types     = optional(set(string), ["ssd"])
-              memory_gib_per_vcpu     = optional(
+              memory_gib_per_vcpu = optional(
                 object(
                   {
                     min = optional(string)
@@ -236,12 +236,12 @@ variable "launch_template_config" {
                 ), {}
               )
             }
-          ), {}
+          ) # , {} 
         )
-        instance_type                        = optional(string)
-        kernel_id                            = optional(string)
-        key_name                             = optional(string)
-        license_specification                = optional(
+        instance_type = optional(string)
+        kernel_id     = optional(string)
+        key_name      = optional(string)
+        license_specification = optional(
           object(
             {
               license_configuration_arn = optional(string)
@@ -254,31 +254,31 @@ variable "launch_template_config" {
               auto_recovery = optional(string, "default")
             }
           ),
-          { }
+          {}
         )
         metadata_options = optional(
           object(
             {
-              http_endpoint = optional(string, "enabled")
-              http_tokens   = optional(string, "required")
+              http_endpoint               = optional(string, "enabled")
+              http_tokens                 = optional(string, "required")
               http_put_response_hop_limit = optional(string, "1")
               http_protocol_ipv6          = optional(string, "disabled")
               instance_metadata_tags      = optional(string, "enabled")
             }
           ),
-          { }
+          {}
         )
         monitoring = optional(
           object(
             {
               enabled = optional(bool, true)
             }
-          ), 
-          { }
+          ),
+          {}
         )
-        name                                 = optional(string)
-        name_prefix                          = optional(string)
-        network_interfaces                   = optional(
+        name        = optional(string)
+        name_prefix = optional(string)
+        network_interfaces = optional(
           object(
             {
               associate_carrier_ip_address = optional(bool)
@@ -296,14 +296,14 @@ variable "launch_template_config" {
               network_interface_id         = optional(string)
               network_card_index           = optional(string, 0)
               private_ip_address           = optional(string)
-              ipv4_address_count           = optional(string) 
+              ipv4_address_count           = optional(string)
               ipv4_addresses               = optional(string)
               security_groups              = optional(set(string))
               subnet_id                    = optional(string)
             }
           )
         )
-        placement                            = optional(
+        placement = optional(
           object(
             {
               affinity                = optional(string)
@@ -326,9 +326,9 @@ variable "launch_template_config" {
             }
           ), {}
         )
-        ram_disk_id              = optional(string)
-        security_group_names     = optional(set(string))
-        tag_specifications       = optional(
+        ram_disk_id          = optional(string)
+        security_group_names = optional(set(string))
+        tag_specifications = optional(
           set(
             object(
               {
@@ -338,10 +338,10 @@ variable "launch_template_config" {
             )
           )
         )
-        tags                     = optional(map(string))
-        update_default_version   = optional(string)
-        user_data                = optional(any)
-        vpc_security_group_ids   = optional(set(string))
+        tags                   = optional(map(string))
+        update_default_version = optional(string)
+        user_data              = optional(any)
+        vpc_security_group_ids = optional(set(string))
       }
     )
   )

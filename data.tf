@@ -12,8 +12,8 @@ data "aws_ami" "ami" {
   # Use the datasource when the variable iamge_id is undefined.
   #
   for_each = {
-    for k,v in var.launch_template_config:
-      k => tolist([v["ami"]]) if try(v["ami"]["ami_filters"], null) != null
+    for k, v in var.launch_template_config :
+    k => tolist([v["ami"]]) if try(v["ami"]["ami_filters"], null) != null
   }
 
   executable_users   = each.value[0]["executable_users"]
