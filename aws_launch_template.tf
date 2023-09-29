@@ -247,6 +247,30 @@ resource "aws_launch_template" "lt" {
     }
   }
 
+  dynamic "network_interfaces" {
+    for_each = each.value["network_interfaces"] == null ? toset([]) : toset([each.value["network_interfaces"]])
+    content {
+      associate_carrier_ip_address = network_interfaces.value["associate_carrier_ip_address"]
+      associate_public_ip_address  = network_interfaces.value["associate_public_ip_address"]
+      delete_on_termination        = network_interfaces.value["delete_on_termination"]
+      description                  = network_interfaces.value["description"]
+      device_index                 = network_interfaces.value["device_index"]
+      interface_type               = network_interfaces.value["interface_type"]
+      ipv4_prefix_count            = network_interfaces.value["ipv4_prefix_count"]
+      ipv4_prefixes                = network_interfaces.value["ipv4_prefixes"]
+      ipv6_addresses               = network_interfaces.value["ipv6_addresses"]
+      ipv6_address_count           = network_interfaces.value["ipv6_address_count"]
+      ipv6_prefix_count            = network_interfaces.value["ipv6_prefix_count"]
+      ipv6_prefixes                = network_interfaces.value["ipv6_prefixes"]
+      network_interface_id         = network_interfaces.value["network_interface_id"]
+      network_card_index           = network_interfaces.value["network_card_index"]
+      private_ip_address           = network_interfaces.value["private_ip_address"]
+      ipv4_address_count           = network_interfaces.value["ipv4_address_count"]
+      ipv4_addresses               = network_interfaces.value["ipv4_addresses"]
+      security_groups              = network_interfaces.value["security_groups"]
+      subnet_id                    = network_interfaces.value["subnet_id"]
+    }
+  }
   dynamic "placement" {
     for_each = each.value["placement"] == null ? toset([]) : toset([each.value["placement"]])
     content {
