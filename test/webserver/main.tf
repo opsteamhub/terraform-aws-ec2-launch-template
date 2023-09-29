@@ -9,14 +9,9 @@ module "lt" {
 
       cpu_options = null
 
-      image_id = data.aws_ami.amazon_linux.id
-
-      # ami_filters = [
-      #   {
-      #     name   = "name"
-      #     values = ["vtault"]
-      #   }
-      # ]
+      ami = {
+        image_id = data.aws_ami.amazon_linux.id
+      }
 
       instance_type = "t2.micro"
 

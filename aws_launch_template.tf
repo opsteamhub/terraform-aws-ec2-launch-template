@@ -102,11 +102,12 @@ resource "aws_launch_template" "lt" {
 
   image_id = try(
     coalesce(
-      data.aws_ami.ami[each.key].id,
-      each.value["ami"]["image_id"]
+      try(each.value["ami"]["image_id"], null),
+      try(data.aws_ami.ami[each.key].id, null)
     ),
     null
   )
+
 
   instance_initiated_shutdown_behavior = each.value["instance_initiated_shutdown_behavior_compatible"] == true ? each.value["instance_initiated_shutdown_behavior"] : null
 
