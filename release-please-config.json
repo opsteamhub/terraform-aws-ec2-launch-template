@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/v17.11.1/schemas/config.json",
+  "bootstrap-sha": "b972a60c2cbf5a6a1b716248294f0855eb6fb724",
+  "draft-pull-request": false,
+  "include-component-in-tag": false,
+  "include-v-in-tag": true,
+  "pull-request-title-pattern": "chore(release): release ${version}",
+  "release-type": "terraform-module",
+  "packages": {
+    ".": {
+      "component": "terraform-aws-ec2-launch-template"
+    }
+  }
+}
