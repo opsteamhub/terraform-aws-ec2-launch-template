@@ -339,10 +339,40 @@ variable "launch_template_config" {
           )
         )
         tags                   = optional(map(string))
-        update_default_version = optional(string)
+        update_default_version = optional(bool, true)
         user_data              = optional(any)
         vpc_security_group_ids = optional(set(string))
       }
     )
   )
+
+  validation {
+    condition = alltrue([
+      for config in values(var.launch_template_config) :
+      !(config.name != null && config.name_prefix != null)
+    ])
+    error_message = "Set only one of name or name_prefix for each launch template."
+  }
+
+  validation {
+    condition = alltrue([
+      for config in values(var.launch_template_config) :
+      config.elastic_gpu_specifications == null && config.elastic_inference_accelerator == null
+    ])
+    error_message = "elastic_gpu_specifications and elastic_inference_accelerator were removed from AWS provider 6.x and must not be configured."
+  }
+
+  validation {
+    condition = alltrue([
+      for config in values(var.launch_template_config) :
+      length(setsubtract(toset(["Environment", "Project", "Owner"]), toset(keys(merge(var.default_tags, coalesce(config.tags, {})))))) == 0
+    ])
+    error_message = "Every launch template must receive Environment, Project, and Owner through default_tags or its tags map."
+  }
+}
+
+variable "default_tags" {
+  description = "Tags merged into every launch template and tag specification. Environment, Project, and Owner are mandatory across the resulting tag set."
+  type        = map(string)
+  default     = {}
 }
