@@ -1,7 +1,8 @@
 resource "aws_launch_template" "lt" {
   for_each = var.launch_template_config
 
-  name = format("lt-%s", each.key)
+  name        = each.value.name != null ? each.value.name : (each.value.name_prefix == null ? format("lt-%s", each.key) : null)
+  name_prefix = each.value.name_prefix
 
 
   dynamic "block_device_mappings" {
@@ -33,7 +34,7 @@ resource "aws_launch_template" "lt" {
     content {
       capacity_reservation_preference = capacity_reservation_specification.value["capacity_reservation_preference"]
       dynamic "capacity_reservation_target" {
-        for_each = coalesce(capacity_reservation_specification.value["capacity_reservation_target"], {})
+        for_each = capacity_reservation_specification.value["capacity_reservation_target"] == null ? [] : [capacity_reservation_specification.value["capacity_reservation_target"]]
         content {
           capacity_reservation_id                 = capacity_reservation_target.value["capacity_reservation_id"]
           capacity_reservation_resource_group_arn = capacity_reservation_target.value["capacity_reservation_resource_group_arn"]
@@ -63,20 +64,6 @@ resource "aws_launch_template" "lt" {
   disable_api_stop        = each.value["disable_api_stop_compatible"] ? each.value["disable_api_stop"] : null
   disable_api_termination = each.value["disable_api_termination_compatible"] ? each.value["disable_api_termination"] : null
   ebs_optimized           = each.value["ebs_optimized"]
-
-  dynamic "elastic_gpu_specifications" {
-    for_each = can(each.value["elastic_gpu_specifications"]) ? toset([]) : toset([each.value["elastic_gpu_specifications"]])
-    content {
-      type = elastic_gpu_specifications.value["type"]
-    }
-  }
-
-  dynamic "elastic_inference_accelerator" {
-    for_each = each.value["elastic_inference_accelerator"] == null ? toset([]) : toset([each.value["elastic_inference_accelerator"]])
-    content {
-      type = elastic_inference_accelerator.value["type"]
-    }
-  }
 
   dynamic "enclave_options" {
     for_each = each.value["enclave_options"] == null ? toset([]) : toset([each.value["enclave_options"]])
@@ -180,8 +167,8 @@ resource "aws_launch_template" "lt" {
       dynamic "network_bandwidth_gbps" {
         for_each = instance_requirements.value["network_bandwidth_gbps"] == null ? toset([]) : toset([instance_requirements.value["network_bandwidth_gbps"]])
         content {
-          min = network_interface_count.value["min"]
-          max = network_interface_count.value["max"]
+          min = network_bandwidth_gbps.value["min"]
+          max = network_bandwidth_gbps.value["max"]
         }
       }
       dynamic "network_interface_count" {
@@ -301,11 +288,11 @@ resource "aws_launch_template" "lt" {
     for_each = each.value["tag_specifications"] == null ? toset([]) : each.value["tag_specifications"]
     content {
       resource_type = tag_specifications.value["resource_type"]
-      tags          = tag_specifications.value["tags"]
+      tags          = merge(var.default_tags, coalesce(tag_specifications.value["tags"], {}))
     }
   }
 
-  tags                   = each.value["tags"]
+  tags                   = merge(var.default_tags, coalesce(each.value["tags"], {}))
   update_default_version = each.value["update_default_version"]
   user_data              = each.value["user_data"]
   vpc_security_group_ids = each.value["vpc_security_group_ids"]
