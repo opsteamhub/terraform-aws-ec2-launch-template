@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/opsteamhub/terraform-aws-ec2-launch-template/compare/v1.0.0...v2.0.0) (2026-09-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* Terraform 1.7, AWS provider 6, mandatory governance tags, and removal of Elastic GPU and Elastic Inference inputs are now required.
+
+### Features
+
+* modernize launch template module for AWS provider 6 ([fd391be](https://github.com/opsteamhub/terraform-aws-ec2-launch-template/commit/fd391be265caba09c02c5e53952bf7dc87ef2946))
+
 ## [Unreleased]
 
 ### Added
