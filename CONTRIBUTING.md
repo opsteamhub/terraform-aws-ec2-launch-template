@@ -1,6 +1,6 @@
 # Contribuindo
 
-Use Terraform 1.7 ou superior. O módulo não precisa de credenciais AWS para validação e testes mockados.
+Use Terraform 1.9 ou superior. O módulo não precisa de credenciais AWS para validação e testes mockados.
 
 ```bash
 terraform init -backend=false -input=false
