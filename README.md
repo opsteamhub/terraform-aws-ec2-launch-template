@@ -4,7 +4,7 @@ Módulo Terraform para criar múltiplos EC2 Launch Templates com defaults seguro
 
 ## Compatibilidade
 
-- Terraform `>= 1.7, < 2.0`
+- Terraform `>= 1.9, < 2.0`
 - AWS provider `>= 6.0, < 7.0`
 
 Esta branch prepara a v2. Leia [docs/MIGRATION-v2.md](docs/MIGRATION-v2.md) antes de atualizar um consumidor existente.

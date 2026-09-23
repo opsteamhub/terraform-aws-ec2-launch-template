@@ -4,7 +4,7 @@
 
 ### Added
 
-- Compatibilidade declarada com Terraform 1.7+ e AWS provider 6.x.
+- Compatibilidade declarada com Terraform 1.9+ e AWS provider 6.x.
 - Validações de nomes, tags obrigatórias e recursos removidos pelo provider.
 - Exemplos, testes mockados, CI, documentação operacional e instruções para agentes.
 
